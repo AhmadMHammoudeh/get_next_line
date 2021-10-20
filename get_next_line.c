@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 11:31:05 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/10/20 15:34:08 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:22:06 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ char	*ft_beforenew(char *s, int c)
 	{
 		if (s[i] == (char)c)
 		{
-			a[i++] = '\n';
-			a[i] = '\0';
+			// a[i++] = '\n';
+			// a[i] = '\0';
 			s = NULL;
 			free(s);
 			return (a);
@@ -112,44 +112,40 @@ char	*get_next_line(int fd)
 	static char	*d;
 	char		*c;
 	int			j;
-	int			i;
 	int			sz;
 
-	if (fd <= 0 || fd >= 1000 || BUFFER_SIZE <= 0)
+	if (fd <= 0 || fd >= 1000 || BUFFER_SIZE < 1)
 		return (NULL);
-	// s = (char *)malloc(sizeof(char));
-	// if (!s)
-	// 	return (NULL);
 	j = 0;
-	i = 0;
 	if (d)
 		s = ft_strdup(d);
 	else
 		s = ft_strdup("");
 	while (j == 0)
 	{
-		c = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char));
+		c = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 		if (!c)
 			return (NULL);
 		sz = read(fd, c, BUFFER_SIZE);
 		if (sz == 0)
 			break ;
 		c[BUFFER_SIZE] = '\0';
+		if (sz < BUFFER_SIZE - 1)
+		{
+			s = ft_strjoin(s, c);
+			break ;
+		}
 		if (ft_strchr(c, '\n'))
 		{
 			d = ft_strdup(ft_strchr(c, '\n'));
 			c = ft_beforenew(c, '\n');
 			s = ft_strjoin(s, c);
 			j = 1;
-			i++;
 		}
 		else
-		{
 			s = ft_strjoin(s, c);
-			i++;
-		}
 	}
-	// c = NULL;
+	c = NULL;
 	free(c);
 	return (s);
 }
@@ -159,7 +155,7 @@ char	*get_next_line(int fd)
 // 	int		fd;
 // 	char *s;
 // 	// char *s1;
-// 	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
+// 	fd = open("/Users/ahhammou/Cursus/Get_next_line/gnlTester/files/multiple_line_no_nl", O_RDONLY);
 // 	s = get_next_line(fd);
 // 	printf("%s", s);
 // 	s = get_next_line(fd);

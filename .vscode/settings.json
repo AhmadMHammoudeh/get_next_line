@@ -1,7 +1,8 @@
 {
     "git.ignoreLimitWarning": true,
     "files.associations": {
-        "string.h": "c",
-        "libft.h": "c"
-    }
+		"string.h": "c",
+		"libft.h": "c",
+		"unistd.h": "c"
+	}
 }
