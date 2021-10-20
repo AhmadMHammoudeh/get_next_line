@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 11:31:05 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/10/20 14:02:17 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:47:29 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,20 +150,20 @@ char	*get_next_line(int fd)
 	return (s);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char *s;
-// 	// char *s1;
-// 	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	// s1 = ft_strjoin("NOPE", "MAYBE");
-// 	// printf("%s", s1);
-// }
+int	main(void)
+{
+	int		fd;
+	char *s;
+	// char *s1;
+	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
+	s = get_next_line(fd);
+	printf("%s", s);
+	s = get_next_line(fd);
+	printf("%s", s);
+	s = get_next_line(fd);
+	printf("%s", s);
+	s = get_next_line(fd);
+	printf("%s", s);
+	// s1 = ft_strjoin("NOPE", "MAYBE");
+	// printf("%s", s1);
+}
