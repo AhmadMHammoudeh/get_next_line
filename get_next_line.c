@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 11:31:05 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/10/20 14:47:29 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:34:08 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (*s2)
 		ptr[i++] = *s2++;
 	ptr[i] = '\0';
-	// free(s1);
-	// s1 = NULL;
+	s1 = NULL;
+	free(s1);
 	return (ptr);
 }
 
@@ -63,6 +63,8 @@ char	*ft_beforenew(char *s, int c)
 		{
 			a[i++] = '\n';
 			a[i] = '\0';
+			s = NULL;
+			free(s);
 			return (a);
 		}
 		a[i] = s[i];
@@ -115,13 +117,15 @@ char	*get_next_line(int fd)
 
 	if (fd <= 0 || fd >= 1000 || BUFFER_SIZE <= 0)
 		return (NULL);
-	s = (char *)malloc(sizeof(char));
-	if (!s)
-		return (NULL);
+	// s = (char *)malloc(sizeof(char));
+	// if (!s)
+	// 	return (NULL);
 	j = 0;
 	i = 0;
 	if (d)
 		s = ft_strdup(d);
+	else
+		s = ft_strdup("");
 	while (j == 0)
 	{
 		c = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char));
@@ -134,7 +138,6 @@ char	*get_next_line(int fd)
 		if (ft_strchr(c, '\n'))
 		{
 			d = ft_strdup(ft_strchr(c, '\n'));
-			//  printf("%s", d);
 			c = ft_beforenew(c, '\n');
 			s = ft_strjoin(s, c);
 			j = 1;
@@ -146,24 +149,25 @@ char	*get_next_line(int fd)
 			i++;
 		}
 	}
+	// c = NULL;
 	free(c);
 	return (s);
 }
 
-int	main(void)
-{
-	int		fd;
-	char *s;
-	// char *s1;
-	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
-	s = get_next_line(fd);
-	printf("%s", s);
-	s = get_next_line(fd);
-	printf("%s", s);
-	s = get_next_line(fd);
-	printf("%s", s);
-	s = get_next_line(fd);
-	printf("%s", s);
-	// s1 = ft_strjoin("NOPE", "MAYBE");
-	// printf("%s", s1);
-}
+// int	main(void)
+// {
+// 	int		fd;
+// 	char *s;
+// 	// char *s1;
+// 	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	// s1 = ft_strjoin("NOPE", "MAYBE");
+// 	// printf("%s", s1);
+// }
