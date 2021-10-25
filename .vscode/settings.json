@@ -3,6 +3,8 @@
     "files.associations": {
 		"string.h": "c",
 		"libft.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"get_next_line.h": "c",
+		"fcntl.h": "c"
 	}
 }

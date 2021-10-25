@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 11:31:05 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/10/19 14:16:30 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:02:14 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,153 @@
 #include<stdio.h>
 #include<unistd.h>
 #include <fcntl.h>
+#include "get_next_line.h"
 
-// int	ft_strlen(const char *s)
+// char	*ft_strjoin(char *s1, char *s2)
+// {
+// 	int	i;
+// 	int	j;
+// 	char	*str;
+
+// 	i = 0;
+// 	j = 0;
+// 	if (s1 == NULL)
+// 	{
+// 		s1 = (char *)malloc(sizeof(char) * 1);
+// 		s1[0] = '\0';
+// 	}
+// 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+// 	if (str == NULL)
+// 		return (NULL);
+// 	while (s1[j] != '\0')
+// 		str[i++] = s1[j++];
+// 	j = 0;
+// 	while (s2[j] != '\0')
+// 		str[i++] = s2[j++];
+// 	str[i] = '\0';
+// 	ft_free(&s1);
+// 	// free(s1);
+// 	return (str);
+// }
+
+// int	ft_strlen(char *s)
 // {
 // 	int	i;
 
 // 	i = 0;
 // 	while (s[i] != '\0')
-// 	{
 // 		i++;
-// 	}
 // 	return (i);
 // }
 
-// char	*ft_strjoin(char const *s1, char const *s2)
+// char	*ft_strchr(char *src)
 // {
-// 	char	*ptr;
-// 	int		i;
-
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	i = 0;
-// 	ptr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-// 	if (!ptr)
-// 		return (NULL);
-// 	while (*s1 != '\0')
-// 	{
-// 		ptr[i++] = *s1++;
-// 	}
-// 	while (*s2)
-// 	{
-// 		ptr[i++] = *s2++;
-// 	}
-// 	ptr[i] = '\0';
-// 	return (ptr);
-// }
-
-// char	*get_next_line(int fd)
-// {
-// 	int		sz;
-// 	static char	*c;
-// 	char	*s;
-// 	int		i;
+// 	int	i;
 
 // 	i = 0;
-// 	s = (char *)malloc(10000 * sizeof(char));
-// 	c = (char *)malloc(1000 * sizeof(char));
-// 	sz = read(fd, c, 100);
-// //	printf("%s", c);
-// 	while (c[i] != '\n')
+// 	if (src == NULL)
+// 		return (0);
+// 	while (src[i] != '\0')
 // 	{
-// 		s[i] = c[i];
-// 		// printf("%c", s[i]);
+// 		if (src[i] == '\n')
+// 			return ((char *)&src[i]);
 // 		i++;
 // 	}
-// 	s[i] = '\n';
-// 	// printf("%c", s[i]);
-// 	// printf("called read(%d, c, 10). returned that"
-// 	// 	   " %d bytes were read.\n",
-// 	// 	   fd, sz);
-// 	// printf("Those bytes are as follows: %s\n", s);
-// 	// if ()
-// 	return (s);
+// 	return (0);
 // }
 
-// // int	main(void)
-// // {
-// // 	int		fd;
-	
-// // 	fd = open("/Users/ahhammou/Cursus/Get_next_line/hi.text", O_RDONLY);
-// // 	get_next_line(fd);
-// // }
+char	*ft_beforenew(char *s)
+{
+	int		i;
+	char	*a;
+
+	if (!s)
+		return (NULL);
+	a = malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (! a)
+		return (NULL);
+	i = 0;
+	while (s[i] && s[i] != '\n')
+	{
+		a[i] = s[i];
+		i++;
+	}
+	if (s[i] == '\n')
+		a[i] = s[i];
+	// ft_free(&s);
+	free(s);
+	return (a);
+}
+
+char	*ft_strdup(char *s1)
+{
+	char	*ptr;
+	int		i;
+
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	i = 0;
+	if (!ptr)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		if (s1[i] == '\n')
+			
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	// ft_free(&s1);
+	free(s1);
+	return (ptr);
+}
+
+char	*ft_read_line(char *src)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	if (src == NULL)
+		return (NULL);
+	while (src[i] != '\n' && src[i] != '\0')
+		i++;
+	str = (char *)malloc(sizeof(char) * (i + 2));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (src[i] != '\n' && src[i] != '\0')
+	{
+		str[i] = src[i];
+		i++;
+	}
+	if (src[i] == '\n')
+		str[i++] = '\n';
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_future_line(char *src)
+{
+	int	i;
+	int	j;
+	char	*str;
+
+	i = 0;
+	while (src[i] != '\n' && src[i] != '\0')
+		i++;
+	if (src[i] == '\0')
+	{
+		free (src);
+		return (0);
+	}
+	str = (char *)malloc(sizeof(char) * (ft_strlen(src) - i + 1));
+	if (str == NULL)
+		return (NULL);
+	i++;
+	j = 0;
+	while (src[i] != '\0')
+		str[j++] = src[i++];
+	str[j] = '\0';
+	free (src);
+	return (str);
+}
