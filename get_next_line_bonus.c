@@ -1,53 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 11:31:05 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/11/21 10:53:47 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:31:25 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*ft_w16(char *s, int fd)
+char	*ft_w12(char *src, int fd)
 {
-	char	*temp;
+	char	*buffer;
 	int		size;
 
-	temp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!temp)
-		return (NULL);
-	size = 1337;
-	while (!ft_strchr(s) && size != 0)
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buffer == NULL)
 	{
-		size = read(fd, temp, BUFFER_SIZE);
+		free (buffer);
+		return (NULL);
+	}
+	size = 1;
+	while (!ft_strchr(src, '\n') && size != 0)
+	{
+		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1)
 		{
-			free (temp);
+			free (buffer);
 			return (NULL);
 		}
-		temp[size] = '\0';
-		s = ft_strjoin(s, temp);
+		buffer[size] = '\0';
+		src = ft_strjoin(src, buffer);
 	}
-	free (temp);
-	return (s);
+	free (buffer);
+	return (src);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*s[256];
 	char		*d;
+	static char	*s[256];
 
 	d = NULL;
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	s[fd] = ft_w16(s[fd], fd);
+	s[fd] = ft_w12(s[fd], fd);
 	if (s[fd] == NULL)
 		return (NULL);
-	d = ft_speedo(s[fd]);
+	d = ft_read_line(s[fd]);
 	s[fd] = ft_future_line(s[fd]);
 	if (d[0] == '\0')
 	{
